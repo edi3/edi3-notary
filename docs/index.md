@@ -40,6 +40,8 @@ As we embark into the Blockchain to facilitate greater transparency, portability
 
 ## Goals
 
+The following are features that would faciliate on the suggested notarisation method:
+
 - Standard wrapper for document (see JSON schema 3)
 - Support multiple document types
 - Verify issuer’s identity (provenance)
@@ -52,9 +54,30 @@ As we embark into the Blockchain to facilitate greater transparency, portability
 
 ## Use Cases
 
+There are many trade documents in which we can categorise them into 2 main groups:
+- Non-transferable documents
+- Transferable documents
+
+A non-transferable documents belongs to one person and cannot legally be given to another person and used by them. An example is an air ticket or Certificate of Non-Manipulation (CNM).
+
+However, for transferable documents, it can be transferred by one person to another, passing to the transferee the rights of the original holder. Transferable documents typically include bills of lading, and warehouse receipts. 
+
+
+There are also many ways to verify the issuance of a document, and will discuss the following 2 mechanisms:
+
+- Domain Name Server (DNS)
+DNS is the phonebook of the Internet, connecting web browsers with websites.
+By allowing the DNS system to be used as an identity registry, we allow the domain name owners to claim ownership of a Document Store smart contract on the Blockchain.
+
+- Token Registry
+
+
 #### Non-transferable Document
 
 ##### Certificate of Non-Manipulation
+
+A CNM, issued in the country of transit, provides documentary evidence that the goods have not been switched or modified during transit and that they retain the originating status of their country of export. Importers often use the certificate when transhipping goods.
+
 
 ![docs](document_store.png)
 
