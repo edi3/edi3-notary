@@ -54,22 +54,30 @@ The following are features that would faciliate on the suggested notarisation me
 
 ## Use Cases
 
-There are many trade documents in which we can categorise them into 2 main groups:
+
+
+Trade documentation plays a vital role in international trade as it facilitates the smooth flow of goods and payments thereof across national frontiers. There are many trade documents in which we can categorise them into 2 main groups:
 - Non-transferable documents
 - Transferable documents
 
 A non-transferable documents belongs to one person and cannot legally be given to another person and used by them. An example is an air ticket or Certificate of Non-Manipulation (CNM).
 
-However, for transferable documents, it can be transferred by one person to another, passing to the transferee the rights of the original holder. Transferable documents typically include bills of lading, and warehouse receipts. 
+As for transferable documents, it can be transferred by one person to another, passing to the transferee the rights of the original holder. Transferable documents typically include bills of lading, and warehouse receipts. 
 
+With the abundance of trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that can allows document verification to be executed digitally and safely.
 
-There are also many ways to verify the issuance of a document, and will discuss the following 2 mechanisms:
+There are a couple of methods to digitalise notarisation such as electronic-signature, electronic notarisation, webcam notarisation and etc. Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
 
-- Domain Name Server (DNS)
+### Domain Name Server (DNS)
+
 DNS is the phonebook of the Internet, connecting web browsers with websites.
 By allowing the DNS system to be used as an identity registry, we allow the domain name owners to claim ownership of a Document Store smart contract on the Blockchain.
 
-- Token Registry
+The DNS system is a key part of Internet infrastructure, and is a decentralised system - this means that there is a low barrier to entry and does not have a single point of failure. It allows issuers to simply tie their issuance to their domain name, (e.g example.openattestation.com). When a user views a certificate issued under this model, they will see "Document issued by example.openattestation.com".
+
+### Token Registry
+
+Token Registry supports the construct of assets which can have ownership assigned to them. This is supported using Blockchain smart contracts to keep track of the owner of a particular asset. This solution will faciliate the title transfer requirements for Transferable Documents. 
 
 
 #### Non-transferable Document
@@ -105,6 +113,11 @@ A CNM, issued in the country of transit, provides documentary evidence that the 
 
 #### Transferable Document
 ##### Bill of Lading
+
+
+Bill of Lading allows the transmission of ownership of the goods through a simple endorsement.
+
+
 
 ![docs](token_registry.png)
 
@@ -360,10 +373,6 @@ const verified = isVerified(verificationFragments);
 
 # Decentralised Document Rendering
 
-## Status
-
-Accepted
-
 ## Goal
 
 
@@ -522,10 +531,6 @@ const action = {
 };
 ```
 # Selective Disclosure
-
-## Status
-
-Accepted
 
 ## Goal
 
