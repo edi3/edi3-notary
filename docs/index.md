@@ -64,9 +64,9 @@ A non-transferable documents belongs to one person and cannot legally be given t
 
 As for transferable documents, it can be transferred by one person to another, passing to the transferee the rights of the original holder. Transferable documents typically include bills of lading, and warehouse receipts. 
 
-With the abundance of trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that can allows document verification to be executed digitally and safely.
+With numerous trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that allows document verification to be executed digitally and safely.
 
-There are a couple of methods to digitalise notarisation such as electronic-signature, electronic notarisation, webcam notarisation and etc. Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
+We also note that there are a couple of methods to digitalise notarisation such as electronic-signature, electronic notarisation, webcam notarisation and etc. Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
 
 ### Domain Name Server (DNS)
 
