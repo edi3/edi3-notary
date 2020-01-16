@@ -6,7 +6,7 @@ editors: "[Shujing Liew](mailto:LIEW_Shujing@imda.gov.sg)"
 contributors: Raymond, Rui Jie
 ---
 
-# Abstract
+# 1. Abstract
 
 This document describes the technical specifications for notarisation of trade documents using open-source solution leveraging on Distributed Ledger Technology (DLT). This allows end users receiving the document to verify the provenance and integrity of the document. 
 
@@ -21,7 +21,7 @@ The use of such technology offers several advantages.
 - Connecting the disconnected world (digital standard); allowing isolated eco-systems to be interoperable
 
 
-# Introduction
+# 2. Introduction
 
 Before digital transformation transpired, trade documents require a lot of administrative burden resulting in an increase in time and cost of manual verification. With the emergence of digital technologies in the trade world, it has changed the way we work and helped to improve operational efficiency across supply chains.
 
@@ -38,7 +38,7 @@ A major cultural and paradigm shift in the trade world has taken shape since the
 As we embark into the Blockchain to facilitate greater transparency, portability of information and greater operational efficiency, trade documents can now be notarised digitally and allowed tracing on the provenance and verification of digitally issued documents. This notarisation makes use of a framework to format data so that it can be fingerprinted, and then notarised on a trusted platform, such as the Ethereum blockchain.
 
 
-## Goals
+## 2.1 Goals
 
 The following are features that would faciliate on the suggested notarisation method:
 
@@ -52,7 +52,7 @@ The following are features that would faciliate on the suggested notarisation me
 - Compatible with W3C Verifiable Claims
 
 
-## Use Cases
+## 2.2 Use Cases
 
 
 
@@ -66,21 +66,21 @@ As for transferable documents, it can be transferred by one person to another, p
 
 With numerous trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that allows document verification to be executed digitally and safely.
 
-We also note that there are a couple of methods to digitalise notarisation such as electronic-signature, electronic notarisation, webcam notarisation and etc. Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
+Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
 
-### Domain Name Server (DNS)
+### 2.2.1 Domain Name Server (DNS)
 
 DNS is the phonebook of the Internet, connecting web browsers with websites.
 By allowing the DNS system to be used as an identity registry, we allow the domain name owners to claim ownership of a Document Store smart contract on the Blockchain.
 
 The DNS system is a key part of Internet infrastructure, and is a decentralised system - this means that there is a low barrier to entry and does not have a single point of failure. It allows issuers to simply tie their issuance to their domain name, (e.g example.openattestation.com). When a user views a certificate issued under this model, they will see "Document issued by example.openattestation.com".
 
-### Token Registry
+### 2.2.2 Token Registry
 
 Token Registry supports the construct of assets which can have ownership assigned to them. This is supported using Blockchain smart contracts to keep track of the owner of a particular asset. This solution will faciliate the title transfer requirements for Transferable Documents. 
 
 
-#### Non-transferable Document
+#### 2.2.3 Non-transferable Document
 
 ##### Certificate of Non-Manipulation
 
@@ -111,7 +111,7 @@ A CNM, issued in the country of transit, provides documentary evidence that the 
 - Issuer Identity
   - Check that a TXT record exist on the domain claiming the ownership of the document store
 
-#### Transferable Document
+#### 2.2.4 Transferable Document
 ##### Bill of Lading
 
 
@@ -144,16 +144,9 @@ Bill of Lading allows the transmission of ownership of the goods through a simpl
   - Check that a TXT record exists on the domain claiming the ownership of the token registry.
 
 
-# Data Model
+# 3. Data Model
 
-## JSON Schema
-
-The document data model is defined using JSON Schema with the following definitions found in Annex A.
-
-
-## JSON Schema Validator
-
-A useful online tool JSON Schema Validator that can help to validate whether the document data conforms to the schema: https://www.jsonschemavalidator.net/
+The document data model is defined using JSON Schema with the following definitions found in Annex A. There are a number of JSON Schema Validators that can help to validate whether the document data conforms to the schema. One example is https://www.jsonschemavalidator.net/
 
 Just paste the content of the schema document on the left panel and enter the document data on the right. The tool will instantly validate the document String/Object and notify any potential errors.
 
@@ -167,220 +160,76 @@ An example of a failed validation:
 ![docs](json_failed.png)
 
 
-# Basic Concept
-## Verification Method
+## 3.1 Data Dictionary
+
+The OA Data Dictionary can be found in the following [URL](https://github.com/Open-Attestation/schema-doc/blob/master/document/tradetrust-properties-attachments-to-the-document-attached-file.md)
+
+
+# 4. Basic Concept
+## 4.1 Verification Method
 
 The purpose of the verifier is to provide a generic verification method to verify OpenAttestation(OA) documents. The verifier will provide default verification methods conforming to the standard verification process proposed in OpenAttestation yet providing opportunities for it to be extended.
 
-### Overview of the verification methods
+### 4.2 Overview of the verification methods
 
 ![docs](architecture.png)
 
 A verifier is made up of multiple `Verification Methods`. In the diagram above, `OpenAttestationDnsTxt, OpenAttestationEthereumDocumentStoreIssued` and `OpenAttestationHash` are examples of `Verification Methods` provided.
+Depending on the type of document, a document can be executed using one or multiple `Verification Methods`. Each `Verification Method` will return a `VerificationFragment`which states the status of the verification. 
 
-The role of a verification method is to verify the OA document is valid against specific criterias. Since there are many types and versions of OA document, not all test should run against all types of OA document. For that reason, a `test` method is also defined to test if a method should run against a document. If the method is incompatible with the document type, it should skip the method.
 
-As a result, a verification method should implement 3 abstract methods: `verify, test and skip`.
+### 4.3 API
 
-The verification method should return a `VerificationFragment` which states the status of the verification. The status key can have the following values:
+`verify` and `isValid` will validate if the document's verification is successful and if the document token is valid respectively. 
+
+```typescript
+import { documentRopstenValidWithToken } from "./test/fixtures/v2/documentRopstenValidWithToken";
+import { verify, isValid } from "@govtechsg/oa-verify";
+
+verify(documentRopstenValidWithToken).then(console.log); // see below
+console.log(isValid(results)); // display true
+```
+
+#### 4.3.1 verify
+ The `verify` MUST return a array of verification fragments
+#### 4.3.1.1  Verification Fragments
+ Verification fragments return the status of the verification. The status key can have the following values:
 
 - `VALID`: when the verification is successful
 - `INVALID`: when the verification is unsuccessful
 - `ERROR`: when an unexpected error is met
 - `SKIPPED`: when the verification was skipped by the manager
 
-#### test(document: Document): boolean
-This function takes in an OA document and returns a boolean result that determines if this verification method is meant to be ran against the document.
 
-In the case that the test passes, we should run the `verify` function. Otherwise, the `skip` function should be ran.
+#### 4.3.2 isValid
+ The `isValid` MUST take in results from `verify` method and return a status of either `true` or `false`. 
 
-#### skip(): VerificationFragment
-This function should be ran when the verification method is skipped for the given OA document. It will return the skipped `VerificationFragment` for the test.
+`isValid` checks the following before returning the validity status:
+- Status of a document: checks that the document has been issued and that it's issuance status is in good standing.
+- Integrity of a document: ensure that the content of the issued document has not been modified since the document has been issued, with exception of data which has been removed using built-in obfuscation mechanism
+- Identity of Issuer: checks and return the identity of the issuer. Methods of these types generally verify the identity of the issuer against a decentralised identity provider (ie DID, DNS, etc) or some centrally managed identity registry (ie Singapore's OpenCerts Registry, Citizen Identity Registry, Business Identity Registry, etc).
 
-An example of `VerificationFragment` that skips the DNS-TXT verification:
-{
-  ```json
-  "name": "OpenAttestationDnsTxt",
-  "type": "ISSUER_IDENTITY",
-  "status": "SKIPPED",
-  "message": "Document issuers doesn't have \"documentStore\" or \"token\" property"
-  
-  ```
-}
 
-#### verify(document: Document): VerificationFragment
+The function allow to specify as a second parameters the list of types on which to perform the checks
 
-This function should be ran when the test passes. Running this function will execute the necessary computation to determine if the document passes the verification method.
+```typescript
+import { documentRopstenValidWithCertificateStore } from "./test/fixtures/v2/documentRopstenValidWithCertificateStore";
+import { verify, isValid } from "@govtechsg/oa-verify";
 
-An example `VerificationFragment` of a passing test:
-
-```json
-{
-  "name": "OpenAttestationEthereumDocumentStoreIssued",
-  "type": "DOCUMENT_STATUS",
-  "status": "VALID",
-  "data": {
-    "details": [
-      {
-        "address": "0x007d40224f6562461633ccfbaffd359ebb2fc9ba",
-        "issued": true
-      }
-    ],
-    "issuedOnAll": true
-  }
-}
+const fragments = verify(documentRopstenValidWithCertificateStore);
+isValid(fragments); // display false because ISSUER_IDENTITY is INVALID
+isValid(fragments, ["DOCUMENT_INTEGRITY", "DOCUMENT_STATUS"]); // display true because those types are VALID
 ```
 
-An example `VerificationFragment` of a failed test:
 
-```json
-{
-  "name": "OpenAttestationEthereumDocumentStoreIssued",
-  "type": "DOCUMENT_STATUS",
-  "status": "INVALID",
-  "message": "Certificate has not been issued",
-  "data": {
-    "details": [
-      {
-        "address": "0x20bc9C354A18C8178A713B9BcCFFaC2152b53990",
-        "error": "call exception (address=\"0x20bc9C354A18C8178A713B9BcCFFaC2152b53990\", method=\"isIssued(bytes32)\", args=[\"0x85df2b4e905a82cf10c317df8f4b659b5cf38cc12bd5fbaffba5fc901ef0011b\"], version=4.0.40)",
-        "issued": false
-      }
-    ],
-    "issuedOnAll": false
-  }
-}
-```
-
-### Verification Types
-
-A `Verification Type` is a type label to a verification method. It specifies what type of verification the method is performing. The diagram above shows the 3 default verification types: `ISSUER_IDENTITY`, `DOCUMENT_INTEGRITY` and `DOCUMENT_STATUS`.
-
-For the validity of the verification type to be true, the requirements must be met:
-
-1. At least one method in that type should return `VALID` as the status.
-1. All methods in the type should return either `VALID` or `SKIPPED` as the status.
-
-### Verifier
-
-The verifier is a function used to verify any OpenAttestation document. It returns a set of `VerificationFragment` from the different verification methods.
-
-From the `VerificationFragments` we can then determine if the OA document is valid. The OA document is valid when all `Verification Types` has valid statuses.
-
-## Default Verification Types and Methods
-
-### Document Integrity (DOCUMENT_INTEGRITY)
-
-The `DOCUMENT_INTEGRITY` type of verification methods ensure that the content of the issued document has not been modified since the document has been issued, with exception of data which has been removed using built-in obfuscation mechanism.
-
-#### OpenAttestationHash
-
-The `OpenAttestationHash` method checks the integrity of the document using the `OpenAttestationSignature2018` method by digesting the content of the OA document and comparing it with the document's `targetHash`.
-
-In addition, if the `targetHash` does not match the `merkleRoot` of the document, the function also checks that the `targetHash` resolves to the `merkleRoot` using the given `proofs`.
-
-### Document Status (DOCUMENT_STATUS)
-
-The `DOCUMENT_STATUS` type of verification methods checks that the document has been issued and that it's issuance status is in good standing. Methods of these types generally verifies the issuance status against a record maintained externally, ie Records on a Blockchain or API endpoints.
-
-#### OpenAttestationEthereumDocumentStoreIssued
-
-The `OpenAttestationEthereumDocumentStoreIssued` checks the issuance status of the document using `OpenAttestationSignature2018` with `DOCUMENT_STORE` or `TOKEN_REGISTRY` methods.
-
-Signature of OA Document using this method:
-
-```json
-{
-  "proof": {
-    "type": "OpenAttestationSignature2018",
-    "method": "DOCUMENT_STORE",
-    "value": "0x9178F546D3FF57D7A6352bD61B80cCCD46199C2d"
-  }
-}
-```
-
-Such document uses a smart contract to store the issuance status of the document.
-
-In the case of `DOCUMENT_STORE` smart contract, the check calls the method `isIssued(merkleRoot)` implemented on the Ethereum smart contract. It returns a valid `VerificationFragment` if the merkle root of the document has been marked as issued.
-
-In the case of `TOKEN_REGISTRY` smart contract, the check calls the method `ownerOf(targetHash)` implemented on the Ethereum smart contract. It returns a valid `VerificationFragment` if the owner of the document is non-zero.
-
-#### OpenAttestationEthereumDocumentStoreRevoked
-
-The `OpenAttestationEthereumDocumentStoreRevoked` checks the revocation status of the document using `OpenAttestationSignature2018` with `DOCUMENT_STORE` or `TOKEN_REGISTRY` methods, similar to `OpenAttestationEthereumDocumentStoreIssued`.
-
-In the case of `DOCUMENT_STORE` smart contract, the check calls the method `isRevoked(merkleRoot)` implemented on the Ethereum smart contract. It returns a valid `VerificationFragment` if the merkle root of the document has not been marked as revoked.
-
-### Issuer Identity (ISSUER_IDENTITY)
-
-The `ISSUER_IDENTITY` type of verification methods checks and return the identity of the issuer. Methods of these types generally verify the identity of the issuer against a decentralised identity provider (ie DID, DNS, etc) or some centrally managed identity registry (ie Singapore's OpenCerts Registry, Citizen Identity Registry, Business Identity Registry, etc).
-
-#### OpenAttestationDnsTxt
-
-The `OpenAttestationDnsTxt` method checks the identity of a document issuer using the `DNS-TXT` identity proof mechanism. 
-
-The sample provided below shows a document which claims that `openattestation.com` is the owner of the smart contract `0x9178F546D3FF57D7A6352bD61B80cCCD46199C2d`, which in turn issued the said document:
-
-```json
-{
-  "issuer": {
-    "id": "https://openattestation.com",
-    "name": "Open Attestation",
-    "identityProof": {
-      "type": "DNS-TXT",
-      "location": "openattestation.com"
-    }
-  },
-  "proof": {
-    "type": "OpenAttestationSignature2018",
-    "method": "DOCUMENT_STORE",
-    "value": "0x9178F546D3FF57D7A6352bD61B80cCCD46199C2d"
-  }
-}
-```
-
-The method checks against the DNS record of the domain to confirm the claimed relationship. A sample TXT record on `openattestation.com` to prove ownership of the contract `0x9178F546D3FF57D7A6352bD61B80cCCD46199C2d` on Ethereum Ropsten network is provided below:
-
-```
-openatts net=ethereum netId=3 addr=0x9178F546D3FF57D7A6352bD61B80cCCD46199C2d
-```
-
-Upon confirming that the matching DNS TXT record on the domain, the verification method returns a valid `VerificationFragment` as the result.
-
-In depth discussion of DNS-TXT method is described [in this blog post](https://blog.gds-gov.tech/opencerts-2-0-decentralised-issuer-identity-verification-fb7e2cae8295)
-
-## Usage
-
-To use the default verifier:
-
-```js
-const document = "OA-Document";
-const verificationFragments = verify(document);
-const verified = isVerified(verificationFragments);
-```
-
-To extend the verifier with a custom name registry:
-
-```js
-const document = "OA-Document-With-Custom-Identity-Proof";
-const customIdentityRegistry = "Custom-Verification-Method";
-const verificationFragments = verificationBuilder(document, [
-  ...defaultVerifiers,
-  customIdentityRegistry
-]);
-const verified = isVerified(verificationFragments);
-```
-
-# Decentralised Document Rendering
-
-## Goal
+# 5.Decentralised Document Rendering
 
 
 ![docs](decentralised_rendered_overview.png)
 
 The purpose of the decentralised document renderer is to allow OpenAttestation (OA) document issuers to style their documents without code change to the different implementations of the document viewer. It does so by embedding the website specified by the document issuers as an iframe or webview (for mobile apps) and sending the content of the OA document into the iframe.
 
-## Frame-to-Frame Communication
+## 5.1 Frame-to-Frame Communication
 
 ![docs](decentralised_rendered_api.png)
 
@@ -406,11 +255,11 @@ const printAction = {
 };
 ```
 
-### From host to frame actions
+### 5.1.1 From host to frame actions
 
 The following list of actions are made for the host to communicate to the iframe (and thus must be handled by application embed in the iframe):
 
-#### RENDER_DOCUMENT
+#### 5.1.1.1 RENDER_DOCUMENT
 
 This action sends the document data to the child frame to be rendered.
 
@@ -431,7 +280,7 @@ const action = {
 };
 ```
 
-#### SELECT_TEMPLATE
+#### 5.1.1.2 SELECT_TEMPLATE
 
 This action selects a template amongst the one provided by the decentralized renderer (A renderer may provide 1 to many different templates to display a document).
 
@@ -446,7 +295,7 @@ const action = {
 };
 ```
 
-#### PRINT
+#### 5.1.1.3 PRINT
 
 This action request for the template to process the print action by the browser.
 
@@ -460,7 +309,7 @@ const action = {
 };
 ```
 
-#### GET_TEMPLATES
+#### 5.1.1.4 GET_TEMPLATES
 
 This action returns the list of template tabs available on the document.
 
@@ -475,11 +324,11 @@ const action = {
 };
 ```
 
-## From frame to host actions
+## 5.2 From frame to host actions
 
 The following list of actions are made for iframe to communicate to the host (and thus must be handled by application embedding the iframe):
 
-### UPDATE_HEIGHT
+### 5.2.1 UPDATE_HEIGHT
 
 This action provides the full content height of the iframe so that the host can adapt the automatically the size of the embedded iframe.
 
@@ -494,7 +343,7 @@ const action = {
 };
 ```
 
-### OBFUSCATE
+### 5.2.2 OBFUSCATE
 
 This action provides the name of a field on the document to obfuscate. The value must follow path property.
 
@@ -509,7 +358,7 @@ const action = {
 };
 ```
 
-### UPDATE_TEMPLATES
+### 5.2.3 UPDATE_TEMPLATES
 
 This action provides the list of templates that can be used to render a document. This is usually the response to the `GET_TEMPLATES` action.
 
@@ -530,9 +379,7 @@ const action = {
   ]
 };
 ```
-# Selective Disclosure
-
-## Goal
+# 6. Selective Disclosure
 
 Selective disclosure allows for the holder of OA documents to present subsets of the document to be verified. It does so by allowing users to obfuscated data fields without compromising the integrity of the document.
 
