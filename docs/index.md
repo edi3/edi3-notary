@@ -66,7 +66,7 @@ As for transferable documents, it can be transferred by one person to another, p
 
 With numerous trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that allows document verification to be executed digitally and safely.
 
-Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. Using smart contract we can store evidences of document issuance, or in the case of transferable records, owner of these records. This allows documents to be verified in a decentralized manner.
+Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demonstrate document verification for Non-Transferable Documents and Transferable Documents respectively. Using smart contract we can store evidences of document issuance, or in the case of transferable records, owner of these records. This allows documents to be verified in a decentralized manner.
 
 ### 2.2.1 Domain Name Server (DNS)
 
@@ -84,7 +84,11 @@ Token Registry supports the construct of assets which can have ownership assigne
 
 ##### Certificate of Non-Manipulation
 
+![docs](cnm_diagram.png)
+
 A CNM, issued in the country of transit, provides documentary evidence that the goods have not been switched or modified during transit and that they retain the originating status of their country of export. Importers often use the certificate when transhipping goods.
+
+
 
 
 ![docs](document_store.png)
@@ -147,7 +151,7 @@ Bill of Lading allows the transmission of ownership of the goods through a simpl
 # 3. Data Model
 
 
-The OA Data Model can be found in the following [URL](https://github.com/Open-Attestation/schema-doc/blob/master/document/tradetrust-properties-attachments-to-the-document-attached-file.md)
+The OA Data Model can be found in the following [URL](https://github.com/Open-Attestation/schema-doc/blob/master/document/tradetrust-properties-attachments-to-the-document-attached-file.md).
 
 The document data model is defined using JSON Schema with the following definitions found in Annex A. There are a number of JSON Schema Validators that can help to validate whether the document data conforms to the schema. One example is https://www.jsonschemavalidator.net/
 
@@ -189,7 +193,7 @@ console.log(isValid(results)); // display true
 ```
 
 #### 4.3.1 verify
- The `verify` MUST return a array of verification fragments
+ The `verify` MUST return a array of verification fragments.
 #### 4.3.1.1  Verification Fragments
  Verification fragments return the status of the verification against a verification method. The status key can have the following values:
 
@@ -219,7 +223,7 @@ isValid(fragments, ["DOCUMENT_INTEGRITY", "DOCUMENT_STATUS"]); // display true b
 ```
 
 
-# 5.Decentralised Document Rendering
+# 5. Decentralised Document Rendering
 
 
 ![docs](decentralised_rendered_overview.png)
@@ -396,9 +400,9 @@ In this document, we will describe the steps to:
 2. Obfuscate a value on an issued OA document
 3. Check the integrity of an issued OA document
 
-## Preparing the document
+## 6.1 Preparing the document
 
-### Salting the data
+### 6.1.1 Salting the data
 
 To generate an OA document, through a process known as `document wrapping`, each value is converted from its primitive type to a string with a UUID, the data type and the original value.
 
@@ -471,7 +475,7 @@ Output after salt:
 }
 ```
 
-### Computing individual hashes
+### 6.1.2 Computing individual hashes
 
 After the individual values have been salted, the entire data object is flattened, while preserving the hierarchical structure of the data within the individual keys.
 
@@ -535,7 +539,7 @@ Output after all hashing individual keys (sorted):
 ]
 ```
 
-### Computing document's targetHash
+### 6.1.3 Computing document's targetHash
 
 Finally, with the array of sorted hashes, `keccak256` is applied again on the stringified array to obtain the `targetHash` of the document.
 
@@ -571,7 +575,7 @@ Result:
 "51d6b872aae578d6a4b7decd4370f50b73b5729d8357f3057e240c10bae64ab2"
 ```
 
-### Assembling the OA document
+### 6.1.4 Assembling the OA document
 
 Once the `targetHash` of the document is calculated, it can be appended to the document under the `signature` object.
 
@@ -625,7 +629,7 @@ Example of wrapped OA Document:
 }
 ```
 
-## Obfuscating a value
+## 6.2 Obfuscating a value
 
 To obfuscate a value in the OA document, one simply hash the key-value pair with `keccak256` and store the resulting hash in `privacy.obfuscatedData`. This method can be used to obfuscate multiple key-value pairs in the document data file.
 
@@ -694,7 +698,7 @@ This hash will then be appended to the original OA document and the object that 
 }
 ```
 
-## Check integrity of the document
+## 6.3 Check integrity of the document
 
 To check the integrity of the document, we simply:
 
@@ -704,12 +708,12 @@ To check the integrity of the document, we simply:
 4. Compute the keccak256 hash for the results from (3)
 5. Check that the resulting hash from (4) matches the `targetHash`
 
-## Implementation
+## 6.4 Implementation
 
 [OpenAttestation](https://github.com/Open-Attestation/open-attestation)
 
  
-# References
+# 7. References
 
 OA Schema V3 - https://github.com/Open-Attestation/open-attestation/blob/56231b83b6bd0b6bb164bdd830fc02886b578ec1/src/schema/3.0/schema.json
 
