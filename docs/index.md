@@ -66,7 +66,7 @@ As for transferable documents, it can be transferred by one person to another, p
 
 With numerous trade documents involved in international trade, document verification is an essential process as it verifies the identity of the document signer to prevent fraud, and checks for awareness and volition. Thus we need a solution that allows document verification to be executed digitally and safely.
 
-Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. 
+Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demostrate document verification for Non-Transferable Documents and Transferable Documents respectively. Using smart contract we can store evidences of document issuance, or in the case of transferable records, owner of these records. This allows documents to be verified in a decentralized manner.
 
 ### 2.2.1 Domain Name Server (DNS)
 
@@ -146,6 +146,9 @@ Bill of Lading allows the transmission of ownership of the goods through a simpl
 
 # 3. Data Model
 
+
+The OA Data Model can be found in the following [URL](https://github.com/Open-Attestation/schema-doc/blob/master/document/tradetrust-properties-attachments-to-the-document-attached-file.md)
+
 The document data model is defined using JSON Schema with the following definitions found in Annex A. There are a number of JSON Schema Validators that can help to validate whether the document data conforms to the schema. One example is https://www.jsonschemavalidator.net/
 
 Just paste the content of the schema document on the left panel and enter the document data on the right. The tool will instantly validate the document String/Object and notify any potential errors.
@@ -158,11 +161,6 @@ An example of a failed validation:
 
 
 ![docs](json_failed.png)
-
-
-## 3.1 Data Dictionary
-
-The OA Data Dictionary can be found in the following [URL](https://github.com/Open-Attestation/schema-doc/blob/master/document/tradetrust-properties-attachments-to-the-document-attached-file.md)
 
 
 # 4. Basic Concept
@@ -180,7 +178,7 @@ Depending on the type of document, a document can be executed using one or multi
 
 ### 4.3 API
 
-`verify` and `isValid` will validate if the document's verification is successful and if the document token is valid respectively. 
+'verify' checks the document against the different verification methods and returns the corresponding results of the verification, whereas `isValid` will check if the document is valid.
 
 ```typescript
 import { documentRopstenValidWithToken } from "./test/fixtures/v2/documentRopstenValidWithToken";
@@ -193,24 +191,23 @@ console.log(isValid(results)); // display true
 #### 4.3.1 verify
  The `verify` MUST return a array of verification fragments
 #### 4.3.1.1  Verification Fragments
- Verification fragments return the status of the verification. The status key can have the following values:
+ Verification fragments return the status of the verification against a verification method. The status key can have the following values:
 
 - `VALID`: when the verification is successful
 - `INVALID`: when the verification is unsuccessful
 - `ERROR`: when an unexpected error is met
 - `SKIPPED`: when the verification was skipped by the manager
 
+As well as any metadata returned from the verification method. Examples of metadata includes resolved identity from a identity verification method.
 
 #### 4.3.2 isValid
- The `isValid` MUST take in results from `verify` method and return a status of either `true` or `false`. 
+ The 'isValid' MUST take in results from `verify` method and return a sumarised status of either true or false.
 
 `isValid` checks the following before returning the validity status:
 - Status of a document: checks that the document has been issued and that it's issuance status is in good standing.
 - Integrity of a document: ensure that the content of the issued document has not been modified since the document has been issued, with exception of data which has been removed using built-in obfuscation mechanism
 - Identity of Issuer: checks and return the identity of the issuer. Methods of these types generally verify the identity of the issuer against a decentralised identity provider (ie DID, DNS, etc) or some centrally managed identity registry (ie Singapore's OpenCerts Registry, Citizen Identity Registry, Business Identity Registry, etc).
 
-
-The function allow to specify as a second parameters the list of types on which to perform the checks
 
 ```typescript
 import { documentRopstenValidWithCertificateStore } from "./test/fixtures/v2/documentRopstenValidWithCertificateStore";
