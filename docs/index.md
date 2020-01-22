@@ -135,8 +135,21 @@ The following diagrams shows:
 ##### Bill of Lading
 
 
-Bill of Lading allows the transmission of ownership of the goods through a simple endorsement.
+Bill of Lading (BL) allows the transmission of ownership of the goods through a simple endorsement as shown in the following diagram. The different points indicates the different functionalities of a BL:
+- Evidence of Contract of Carriage (i.e. Specifies how, from where to etc)
+- Receipt of Goods (i.e. an acknowledgement that the goods have been loaded)
+- Title Document (i.e. Ownership and control of goods can be transferred)
 
+
+![docs](ebl_diagram.png)
+
+
+The following diagrams shows:
+
+
+(i) the relationship of the issuance and verification of document using token registry;
+
+(ii) the process flow of issuance and verification of document and issuer's identity
 
 
 ![docs](token_registry.png)
