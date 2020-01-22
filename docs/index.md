@@ -84,11 +84,22 @@ Token Registry supports the construct of assets which can have ownership assigne
 
 ##### Certificate of Non-Manipulation
 
+The following diagram illustrates how goods are shipped from exporter country to importer country and transhipping at a transhipmemt country. 
+
 ![docs](cnm_diagram.png)
 
-A CNM, issued in the country of transit, provides documentary evidence that the goods have not been switched or modified during transit and that they retain the originating status of their country of export. Importers often use the certificate when transhipping goods.
+A CNM, issued in the country of transit, provides documentary evidence that the goods have not been switched or modified during transit and that they retain the originating status of their country of export. Importers often use the certificate when transhipping goods as shown in the following diagram. 
 
 
+![docs](cnm_flow_diagram.png)
+
+
+The following diagrams shows:
+
+
+(i) the relationship of the issuance and verification of document using document's data hash and merkle root;
+
+(ii) the process flow of issuance and verification of document and issuer's identity
 
 
 ![docs](document_store.png)
@@ -114,6 +125,11 @@ A CNM, issued in the country of transit, provides documentary evidence that the 
 
 - Issuer Identity
   - Check that a TXT record exist on the domain claiming the ownership of the document store
+
+
+
+![docs](document_store_flow.png)
+
 
 #### 2.2.4 Transferable Document
 ##### Bill of Lading
