@@ -171,7 +171,7 @@ The following diagrams shows:
 
 - Integrity Method
   - Check that the document data’s hash is the ‘targetHash’.
-  - Check the targetHash resolves to the merkle root using the proof (if any).
+  - Check that the targetHash exactly equals to the merklerRoot.
   
 - Issuer Identity
   - Check that a TXT record exists on the domain claiming the ownership of the token registry.
