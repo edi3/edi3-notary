@@ -177,6 +177,8 @@ The following diagrams shows:
   - Check that a TXT record exists on the domain claiming the ownership of the token registry.
 
 
+![docs](token_registry_flow.png)
+
 # 3. Data Model
 
 
