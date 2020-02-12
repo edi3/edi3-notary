@@ -55,12 +55,12 @@ The following are features that would faciliate on the suggested notarisation me
 
 |ID|Principle|Rationale|
 |--|---------|---------|
-|P1|Achieves document provenance| A document SHOULD provide proof of its origin to allow the document viewer to know the source of the document (e.g. the issuer). |
-|P2|Achieves document integrity|A document SHOULD be tamper-proof. In the case of a tampered document, it should be easy to indicate tampering.|
+|P1|Verifiable document provenance| A document SHOULD provide proof of its origin to allow the document viewer to know the source of the document (e.g. the issuer). |
+|P2|Verifiable document integrity|A document SHOULD be tamper-proof. In the case of a tampered document, it should be easy to indicate tampering.|
 |P3|Allows decentralised creation|Anyone MAY create a document without permission of any other entity.|
 |P4|Supports multiple distributed ledger types & networks|A single global uber-ledger would need to pick a technology winner, would restrict the ability to introduce non breaking extensions, would present a high value attack target, and is unlikely to be supported by every nation.|
 |P5|Coexist nicely with paper processes|A switch from paper processes to notarised digital documents will not happen overnight. Therefore the notarised digital document should add value to existing paper processes by allowing easy switching between the digital and paper documents.|
-|P6|Allows decentralised identifier|Any document issuers can tie existing identifiers to themselves. Document verifiers can choose different ways to resolve that identifier.|
+|P6|Allows decentralised identifier|Any document issuers MAY tie existing identifiers to themselves. Document verifiers MAY choose different ways to resolve that identifier.|
 |P7|Allows payload agnostics|The document SHOULD allow for any payload or media to be part of the document.|
 |P8|Assume on-chain data is public|The notarised document stores proof of document issuance status on public or private ledgers. In either case, it should be assumed that on-chain data is public as the privacy of on-chain data cannot be guaranteed with multiple participants on the network that may not be fully trusted.|
 |P9|Supports human readable view|The document SHOULD be presented in ways that are familiar to humans who were processing the physical copies of that document. The creator of the document should be allowed to define how the document should be presented visually.|
@@ -77,9 +77,9 @@ The following are features that would faciliate on the suggested notarisation me
 |R4|The document verification platform SHOULD NOT require that the end-user have any knowledge of the specific backend technology used (e.g. Ethereum, Hyperledger, REST API, etc)|Link to notary service|
 |R5|Anyone SHOULD be able to create a document.|Link to notary service|
 |R6|Anyone SHOULD be able to verify the document by following the verification procedures to verify the document provenance and integrity.|Link to verification method|
-|R7|Creation of notarised documents SHOULD NOT automatically grant access to the content of the document to anyone else. <br> A document when created MAY have a method for revocation. Upon revocation, all copies of the document MUST show revoked status. |...|
+|R7|Creation of notarised documents SHOULD NOT automatically grant access to the content of the document to anyone else. <br> A document, when created, MAY have a method for revocation. Upon revocation, all copies of the document MUST show revoked status. |...|
 |R8|The proof of document issuance status SHOULD allow any backend to be used. Examples are Ethereum blockchain, Hyperledger blockchain or REST APIs.|Link to verification method|
-|R9|The creation of documents SHOULD support bulk document creation.|...|
+|R9|The creation of documents MAY support bulk document creation.|...|
 |R10|The integrity of the document MUST be verified by checking the checksum of the document against the records on the backend (i.e. Etherum, Hyperledger, REST API etc).|Link to verification method - integrity |
 |R11|The document verifier MAY implement different identifier resolvers to resolve and verify the identity claim of the issuer.|Link to verification method - identification|
 |R12|The identifier resolver MUST use information from other sources to verify the relationship between the identifier owner and the backend.|Link to verification method - identification|
