@@ -3,7 +3,7 @@ title: "edi3 Notary Service 1.0 Specification"
 specID: "notary/1"
 status: "![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
 editors: "[Shujing Liew](mailto:LIEW_Shujing@imda.gov.sg)"
-contributors: Raymond, Rui Jie
+contributors: Raymond Yeh, Rui Jie Chow
 ---
 
 # 1. Abstract
@@ -51,8 +51,59 @@ The following are features that would faciliate on the suggested notarisation me
 - Support multiple backend (ETH/API/Private Blockchain)
 - Compatible with W3C Verifiable Claims
 
+## 2.2 Architectural Principles
 
-## 2.2 Use Cases
+|ID|Principle|Rationale|
+|--|---------|---------|
+|P1|Achieves document provenance| A document SHOULD provide proof of its origin to allow the document viewer to know the source of the document (e.g. the issuer). |
+|P2|Achieves document integrity|A document SHOULD be tamper-proof. In the case of a tampered document, it should be easy to indicate tampering.|
+|P3|Allows decentralised creation|Anyone MAY create a document without permission of any other entity.|
+|P4|Supports multiple distributed ledger types & networks|A single global uber-ledger would need to pick a technology winner, would restrict the ability to introduce non breaking extensions, would present a high value attack target, and is unlikely to be supported by every nation.|
+|P5|Coexist nicely with paper processes|A switch from paper processes to notarised digital documents will not happen overnight. Therefore the notarised digital document should add value to existing paper processes by allowing easy switching between the digital and paper documents.|
+|P6|Allows decentralised identifier|Any document issuers can tie existing identifiers to themselves. Document verifiers can choose different ways to resolve that identifier.|
+|P7|Allows payload agnostics|The document SHOULD allow for any payload or media to be part of the document.|
+|P8|Assume on-chain data is public|The notarised document stores proof of document issuance status on public or private ledgers. In either case, it should be assumed that on-chain data is public as the privacy of on-chain data cannot be guaranteed with multiple participants on the network that may not be fully trusted.|
+|P9|Supports human readable view|The document SHOULD be presented in ways that are familiar to humans who were processing the physical copies of that document. The creator of the document should be allowed to define how the document should be presented visually.|
+|P10|Supports machine readable data|The document SHOULD separate the view and data layer to allow machines to read these data directly to allow for automatic processing of documents.|
+|P11|Allows user controlled data disclosure|The presenter of a document SHOULD be allowed to redact parts of the document so as not to reveal all information to the recipient, without causing the integrity check to fail.|
+
+## 2.3 High Level Requirements
+
+|ID|Requirement|Solution Links|
+|--|---------|---------|
+|R1|The on-chain notary data SHOULD NOT contain sensitive or private information. Encrypted data SHOULD NOT be on-chain either. Note: in case encrypted data can be decrypted in future. This will pose a security challenge if sensitive data is stored on-chain. |Link to notary service|
+|R2|A document MAY be encrypted. The document verifier MAY implement a decryption mechanism to decrypt encrypted documents.|Link to notary service|
+|R3|Notarised documents, if hosted, SHOULD be accessible via a consistent API.|Link to notary service|
+|R4|The document verification platform SHOULD NOT require that the end-user have any knowledge of the specific backend technology used (e.g. Ethereum, Hyperledger, REST API, etc)|Link to notary service|
+|R5|Anyone SHOULD be able to create a document.|Link to notary service|
+|R6|Anyone SHOULD be able to verify the document by following the verification procedures to verify the document provenance and integrity.|Link to verification method|
+|R7|Creation of notarised documents SHOULD NOT automatically grant access to the content of the document to anyone else. A document when created MAY have a method for revocation. Upon revocation, all copies of the document MUST show revoked status. |...|
+|R8|The proof of document issuance status SHOULD allow any backend to be used. Examples are Ethereum blockchain, Hyperledger blockchain or REST APIs.|Link to verification method|
+|R9|The creation of documents SHOULD support bulk document creation.|...|
+|R10|The integrity of the document MUST be verified by checking the checksum of the document against the records on the backend (i.e. Etherum, Hyperledger, REST API etc).|Link to verification method - integrity |
+|R11|The document verifier MAY implement different identifier resolvers to resolve and verify the identity claim of the issuer.|Link to verification method - identification|
+|R12|The identifier resolver MUST use information from other sources to verify the relationship between the identifier owner and the backend.|Link to verification method - identification|
+|R13|The document creator MAY create a document renderer to render the data in a human readable format|Link to Decentralised Document Rendering|
+|R14|The document viewer MAY implement the different document renderer to render different types of document.|Link to Decentralised Document Rendering|
+|R15|The document creator MAY structure the content of the document in machine readable format following a schema to allow recipients of the document to ingest the data automatically.|...|
+|R16|Any document MUST allow the presenter of the document to redact parts of the document without compromising on the integrity of the document|Link to Selection Disclosure|
+|R17|Should a document have redacted information, the document MUST have evidence that information was redacted without revealing the original information.|Link to Selection Disclosure|
+|R18|The issuance of a document MUST be reflected by appending the document’s or batch of document’s checksum onto the backend’s issuance list (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance |
+|R19|The revocation of a document MUST be reflected by appending the document’s checksum onto the backend’s revocation list (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance|
+|R20|The issuance status of the document MUST be determined by the presence of the document’s checkum OR the document batch’s checksum on the backend. In the case of a document in a batch, there should be cryptographic proofs to show that the document exists in the set of documents issued.|Link to verification - issuance|
+|R21|The revocation status of the document MUST be determined by the presence of the document’s checksum on the backend (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance |
+|R22|Document raw data MUST be wrapped by the notary layer by computing its checksum.|Link to document issuance|
+|R23|Notarised documents MUST NOT be stored on the notary backend. Only the checksum of the documents MAY be on the notary backend’s issuance list or revocation list (e.g. Etherum, Hyperledger, REST API etc).|Link to document issuance |
+|R24|Notarised documents MAY be transmitted via any medium from a presenter or issuer to the recipient.|...|
+|R25|The verifier MUST be modular to allow custom verifiers to be used for different categories.|Link to verification method|
+|R26|The verifier MUST check the document against three main verification categories: document’s integrity, document issuer’s identity and document issuance status.|Link to verification method|
+|R27|The verification for a given verification category MUST fail if: 1. All verifiers are skipped in that category 2. Any verifiers in the verification category has failed verification |Link to verification method|
+|R28|The verifier (in a given verification category) MUST test the document if it should run against it. If not, it MUST be skipped.|Link to verification method|
+|R29|The verifier SHOULD return the status of either skipped, pass or fail for a given document.|Link to verification method|
+|R30|The overall verification status SHOULD fail if one or more verification categories fails.|Link to verification method|
+
+
+## 2.4 Use Cases
 
 
 
@@ -68,19 +119,19 @@ With numerous trade documents involved in international trade, document verifica
 
 Electronic notarisation will be discussed further to prove the verification mechanisam in a decentralised manner in which both Domain Name Server (DNS) and Token Registry are 2 unique blockchain solutions that can demonstrate document verification for Non-Transferable Documents and Transferable Documents respectively. Using smart contract we can store evidences of document issuance, or in the case of transferable records, owner of these records. This allows documents to be verified in a decentralized manner.
 
-### 2.2.1 Domain Name Server (DNS)
+### 2.4.1 Domain Name Server (DNS)
 
 DNS is the phonebook of the Internet, connecting web browsers with websites.
 By allowing the DNS system to be used as an identity registry, we allow the domain name owners to claim ownership of a Document Store smart contract on the Blockchain.
 
 The DNS system is a key part of Internet infrastructure, and is a decentralised system - this means that there is a low barrier to entry and does not have a single point of failure. It allows issuers to simply tie their issuance to their domain name, (e.g example.openattestation.com). When a user views a certificate issued under this model, they will see "Document issued by example.openattestation.com".
 
-### 2.2.2 Token Registry
+### 2.4.2 Token Registry
 
 Token Registry supports the construct of assets which can have ownership assigned to them. This is supported using Blockchain smart contracts to keep track of the owner of a particular asset. This solution will faciliate the title transfer requirements for Transferable Documents. 
 
 
-#### 2.2.3 Non-transferable Document
+#### 2.4.3 Non-transferable Document
 
 ##### Certificate of Non-Manipulation
 
@@ -131,7 +182,7 @@ The following diagrams shows:
 ![docs](document_store_flow.png)
 
 
-#### 2.2.4 Transferable Document
+#### 2.4.4 Transferable Document
 ##### Bill of Lading
 
 
