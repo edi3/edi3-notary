@@ -71,13 +71,13 @@ The following are features that would faciliate on the suggested notarisation me
 
 |ID|Requirement|Solution Links|
 |--|---------|---------|
-|R1|The on-chain notary data SHOULD NOT contain sensitive or private information. Encrypted data SHOULD NOT be on-chain either. Note: in case encrypted data can be decrypted in future. This will pose a security challenge if sensitive data is stored on-chain. |Link to notary service|
+|R1|The on-chain notary data SHOULD NOT contain sensitive or private information. Encrypted data SHOULD NOT be on-chain either. <br><br> Note: in case encrypted data can be decrypted in future. This will pose a security challenge if sensitive data is stored on-chain. |Link to notary service|
 |R2|A document MAY be encrypted. The document verifier MAY implement a decryption mechanism to decrypt encrypted documents.|Link to notary service|
 |R3|Notarised documents, if hosted, SHOULD be accessible via a consistent API.|Link to notary service|
 |R4|The document verification platform SHOULD NOT require that the end-user have any knowledge of the specific backend technology used (e.g. Ethereum, Hyperledger, REST API, etc)|Link to notary service|
 |R5|Anyone SHOULD be able to create a document.|Link to notary service|
 |R6|Anyone SHOULD be able to verify the document by following the verification procedures to verify the document provenance and integrity.|Link to verification method|
-|R7|Creation of notarised documents SHOULD NOT automatically grant access to the content of the document to anyone else. A document when created MAY have a method for revocation. Upon revocation, all copies of the document MUST show revoked status. |...|
+|R7|Creation of notarised documents SHOULD NOT automatically grant access to the content of the document to anyone else. <br> A document when created MAY have a method for revocation. Upon revocation, all copies of the document MUST show revoked status. |...|
 |R8|The proof of document issuance status SHOULD allow any backend to be used. Examples are Ethereum blockchain, Hyperledger blockchain or REST APIs.|Link to verification method|
 |R9|The creation of documents SHOULD support bulk document creation.|...|
 |R10|The integrity of the document MUST be verified by checking the checksum of the document against the records on the backend (i.e. Etherum, Hyperledger, REST API etc).|Link to verification method - integrity |
@@ -90,14 +90,14 @@ The following are features that would faciliate on the suggested notarisation me
 |R17|Should a document have redacted information, the document MUST have evidence that information was redacted without revealing the original information.|Link to Selection Disclosure|
 |R18|The issuance of a document MUST be reflected by appending the document’s or batch of document’s checksum onto the backend’s issuance list (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance |
 |R19|The revocation of a document MUST be reflected by appending the document’s checksum onto the backend’s revocation list (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance|
-|R20|The issuance status of the document MUST be determined by the presence of the document’s checkum OR the document batch’s checksum on the backend. In the case of a document in a batch, there should be cryptographic proofs to show that the document exists in the set of documents issued.|Link to verification - issuance|
+|R20|The issuance status of the document MUST be determined by the presence of the document’s checkum OR the document batch’s checksum on the backend. <br> In the case of a document in a batch, there should be cryptographic proofs to show that the document exists in the set of documents issued.|Link to verification - issuance|
 |R21|The revocation status of the document MUST be determined by the presence of the document’s checksum on the backend (e.g. Etherum, Hyperledger, REST API etc).|Link to verification - issuance |
 |R22|Document raw data MUST be wrapped by the notary layer by computing its checksum.|Link to document issuance|
 |R23|Notarised documents MUST NOT be stored on the notary backend. Only the checksum of the documents MAY be on the notary backend’s issuance list or revocation list (e.g. Etherum, Hyperledger, REST API etc).|Link to document issuance |
 |R24|Notarised documents MAY be transmitted via any medium from a presenter or issuer to the recipient.|...|
 |R25|The verifier MUST be modular to allow custom verifiers to be used for different categories.|Link to verification method|
 |R26|The verifier MUST check the document against three main verification categories: document’s integrity, document issuer’s identity and document issuance status.|Link to verification method|
-|R27|The verification for a given verification category MUST fail if: 1. All verifiers are skipped in that category 2. Any verifiers in the verification category has failed verification |Link to verification method|
+|R27|The verification for a given verification category MUST fail if: <br><br> 1. All verifiers are skipped in that category <br> 2. Any verifiers in the verification category has failed verification |Link to verification method|
 |R28|The verifier (in a given verification category) MUST test the document if it should run against it. If not, it MUST be skipped.|Link to verification method|
 |R29|The verifier SHOULD return the status of either skipped, pass or fail for a given document.|Link to verification method|
 |R30|The overall verification status SHOULD fail if one or more verification categories fails.|Link to verification method|
