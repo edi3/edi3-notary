@@ -35,7 +35,7 @@ Current forms of digital document are neither tamper-proof nor have provenance, 
 
 A major cultural and paradigm shift in the trade world has taken shape since the introduction of Blockchain almost a decade ago. Blockchain, which is a form of DLT offers opportunities to increase reliability and security of trade transactions.<sup id="footnote2">[[2]](#f2)</sup>
 
-As we embark into the Blockchain to facilitate greater transparency, portability of information and greater operational efficiency, trade documents (also known as OpenAttestation (OA) documents in this context) can now be notarised digitally and allowed tracing on the provenance and verification of digitally issued documents. This notarisation makes use of a framework to format data so that it can be fingerprinted, and then notarised on a trusted platform, such as the Ethereum blockchain.
+As we embark into the Blockchain to facilitate greater transparency, portability of information and greater operational efficiency, trade documents (also known as OpenAttestation (OA) <sup id="footnote3">[[3]](#f3)</sup>  documents in this context) can now be notarised digitally and allowed tracing on the provenance and verification of digitally issued documents. This notarisation makes use of a framework to format data so that it can be fingerprinted, and then notarised on a trusted platform, such as the Ethereum blockchain.
 
 
 ## 2.1 Goals
@@ -812,6 +812,10 @@ W3C VC - https://www.w3.org/TR/vc-data-model/
 <sup id="f2">[2]</sup> 
 [UN/CEFACT White Paper on Technical Application of Blockchain to UN/CEFACT deliverables](https://www.unece.org/tradewelcome/un-centre-for-trade-facilitation-and-e-business-uncefact/outputs/guidance-material/doc.html) 
 [↩](#footnote2)
+
+<sup id="f3">[3]</sup> 
+While OpenAttestation is currently published under Apache, the IPR belongs to Singapore Government
+[↩](#footnote1)
 
 # Annex
 
