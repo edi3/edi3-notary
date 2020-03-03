@@ -814,7 +814,7 @@ W3C VC - https://www.w3.org/TR/vc-data-model/
 [↩](#footnote2)
 
 <sup id="f3">[3]</sup> 
-While OpenAttestation is currently published under Apache, the IPR belongs to Singapore Government
+While OpenAttestation is currently published under General Public License (GPL), the IPR belongs to Government Techlogy Agency (GovTech).
 [↩](#footnote1)
 
 # Annex
