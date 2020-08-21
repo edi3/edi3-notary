@@ -203,7 +203,7 @@ The following diagrams shows:
 (ii) the process flow of issuance and verification of document and issuer's identity
 
 
-![docs](token_registry.png)
+![docs](token_registryv3.png)
 
 ###### Preconditions
 - The issuer has a domain name which is custom.example.com.
